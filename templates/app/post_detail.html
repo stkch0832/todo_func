@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+詳細
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center">タスク詳細</h2>
+<div class="container w-75 mx-auto border border-dark my-5 p-5">
+    <div class="row">
+        <h3 class="col-12 text-center">{{post_data.title}}</h3>
+    </div>
+    <div class="row">
+        <p class="col-6 text-center">ステータス：{{ post_data.get_status_display }}</p>
+        <p class="col-6 text-center">期限：{{ post_data.deadline }}</p>
+    </div>
+    <div class="">
+        詳細内容：<br>
+        <p class="" style="height: 100px">
+            {{ post_data.description }}
+        </p>
+    </div>
+    <div class="text-end ">
+        <p >作成日時：{{ post_data.created_at }}</p>
+        <p >更新日時：{{ post_data.updated_at }}</p>
+    </div>
+
+    <div class="text-end">
+        <a href="{% url 'app:post_edit' post_data.pk %}" class="btn btn-primary">編集</a>
+
+        <!-- <button class="btn btn-danger" type="submit" onclick="return confirm('{{post_data}} を本当に削除しますか？')">削除</button> -->
+
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ post_data.pk}}">削除</button>
+    </div>
+
+        {% include 'snippets/delete_modal.html' %}
+
+
+</div>
+
+{% endblock %}
