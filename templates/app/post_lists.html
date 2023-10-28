@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+一覧
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center">タスク一覧</h2>
+
+<table class="table w-75 mx-auto my-5">
+    <thead>
+        <tr>
+            <th scope="col">タイトル</th>
+            <th scope="col">ステータス</th>
+            <th scope="col">期限</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in page_obj %}
+        <tr>
+            <th scope="row"><a href="{% url 'app:post_detail' post.pk %}">
+                {{ post.title }}
+            </a></th>
+            <td>{{ post.get_status_display }}</td>
+            <td>{{ post.deadline }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    {% if page_obj.has_other_pages %}
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">最初</a></li>
+        {% else %}
+        <li class="page-item disable"><span class="page-link text-secondary">最初</span></li>
+        {% endif %}
+
+        {% if page_obj.number|add:'-2' > 1 %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-2' }}">&hellip;</a></li>
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+        {% if page_obj.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }}<span class="visually-hidden"></span></li>
+        {% elif i > page_obj.number|add:'-2' and i < page_obj.number|add:'2' %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.paginator.num_pages > page_obj.number|add:'2' %}
+        <li><a class="page-link" href="?page={{ page_obj.number|add:'2' }}">&hellip;</a></li>
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        <li><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">最後</a></li>
+        {% else %}
+        <li class="page-item disable"><span class="page-link text-secondary">最後</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</nav>
+
+{% endblock %}

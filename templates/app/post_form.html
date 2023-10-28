@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+新規作成
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center">
+    {% if "new" in request.path %}
+    新規登録
+    {% else %}
+    編集
+    {% endif %}
+</h2>
+<div class="container w-75">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">
+            {% if "new" in request.path %}
+            新規登録
+            {% else %}
+            更新
+            {% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}
