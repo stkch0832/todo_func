@@ -1,10 +1,10 @@
+from django.conf import settings
 from django.db import models
 from django.utils.crypto import get_random_string
-from django.contrib.auth.models import User
 
 
 def create_id():
-    return get_random_string(15)
+    return get_random_string(5)
 
 
 class Post(models.Model):
@@ -24,7 +24,7 @@ class Post(models.Model):
         editable=False,
         )
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
         )
     title = models.CharField(

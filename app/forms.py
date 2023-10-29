@@ -2,6 +2,7 @@ from django import forms
 from .models import Post
 
 
+
 class PostForm(forms.Form):
     title = forms.CharField(
         label='タイトル',
@@ -9,7 +10,7 @@ class PostForm(forms.Form):
         widget=forms.TextInput(attrs={
             'class': 'form-control',
         })
-        )
+    )
     status = forms.ChoiceField(
         label='ステータス',
         choices=Post.STATUS_CHOICES,
@@ -22,7 +23,7 @@ class PostForm(forms.Form):
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
             'type': 'datetime-local'
-            })
+        })
     )
     description = forms.CharField(
         label='詳細',
